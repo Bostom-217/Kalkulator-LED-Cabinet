@@ -1,0 +1,25 @@
+<!DOCTYPE html><html><head><style>
+body{font-family:Arial;background:#eef2f7;padding:20px}.box{max-width:850px;margin:auto;background:#fff;padding:24px;border-radius:18px}
+input,select,button{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px}button{background:#0066cc;color:#fff;border:none}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:10px}
+</style></head><body><div class=box><h2>Kalkulator Cabinet LED</h2>
+<select id=tipe onchange='ubahCab()'><option>Indoor</option><option>Outdoor</option></select>
+<select id=cabinet onchange='ubahPitch()'></select><select id=pitch></select>
+<input id=w placeholder="Lebar Screen (mm)"><input id=h placeholder="Tinggi Screen (mm)">
+<button onclick='hitung()'>Hitung</button>
+<table id=tbl style='display:none'><tr><th>Parameter</th><th>Hasil</th></tr>
+<tr><td>Jumlah Cabinet</td><td id=j></td></tr>
+<tr><td>Total Cabinet</td><td id=t></td></tr>
+<tr><td>Resolusi Screen</td><td id=r></td></tr>
+<tr><td>Ukuran Inch</td><td id=i></td></tr>
+<tr><td>Video Processor</td><td id=vp></td></tr></table>
+<script>
+function ubahCab(){cabinet.innerHTML=tipe.value=='Indoor'?'<option value="640x480">640×480</option><option value="640x360">640×360</option>':'<option value="960x960">960×960</option>';ubahPitch();}
+function ubahPitch(){pitch.innerHTML='';let c=cabinet.value;
+(c=='640x480'?['1.8','2.5','4']:c=='640x360'?['1.25','1.5','1.8','2.0','2.5']:['4','5']).forEach(v=>pitch.innerHTML+=`<option value="${v}">P${v}</option>`);}
+ubahCab();
+function hitung(){let c=cabinet.value.split('x'),x=Math.floor(w.value/c[0]),y=Math.floor(h.value/c[1]),rx=Math.floor(w.value/pitch.value),ry=Math.floor(h.value/pitch.value),pix=rx*ry;
+j.innerHTML=x+' × '+y;t.innerHTML=(x*y)+' pcs';r.innerHTML=rx+' × '+ry;i.innerHTML=(Math.sqrt(w.value*w.value+h.value*h.value)/25.4).toFixed(1)+' inch';
+vp.innerHTML=pix<=2600000?'TB1/TB2/TU15 Pro/VX400':pix<=3900000?'TB30/TU20 Pro/VX600':pix<=6500000?'VX1000':'H2/MX';
+tbl.style.display='table';}
+</script></div></body></html>
