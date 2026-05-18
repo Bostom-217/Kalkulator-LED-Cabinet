@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><meta charset='UTF-8'>
+<style>
+body{font-family:Arial;background:#eef2f7;padding:20px}
+.box{max-width:850px;margin:auto;background:#fff;padding:24px;border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+label{font-weight:bold} input,select,button{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;box-sizing:border-box}
+button{background:#0066cc;color:#fff;border:none}
+table{width:100%;border-collapse:collapse;margin-top:12px} th,td{border:1px solid #ddd;padding:10px} th{background:#f4f4f4}
+</style></head><body>
+<div class='box'><h2>Kalkulator Cabinet LED</h2>
+<label>Cabinet</label><select id='cabinet' onchange='ubahPitch()'>
+<option value='640x480'>640 × 480</option><option value='640x360'>640 × 360</option></select>
+<label>Pitch</label><select id='pitch'></select>
+<label>Lebar Screen (mm)</label><input id='w'>
+<label>Tinggi Screen (mm)</label><input id='h'>
+<button onclick='hitung()'>Hitung</button>
+<table id='tbl' style='display:none'><tr><th>Parameter</th><th>Hasil</th></tr>
+<tr><td>Jumlah Cabinet</td><td id='j'></td></tr>
+<tr><td>Total Cabinet</td><td id='t'></td></tr>
+<tr><td>Resolusi Screen</td><td id='r'></td></tr>
+<tr><td>Ukuran Inch</td><td id='i'></td></tr>
+</table></div>
+<script>
+function ubahPitch(){
+let p=document.getElementById('pitch'); p.innerHTML='';
+let c=document.getElementById('cabinet').value;
+(c==='640x480'?['1.8','2.5','4']:['1.25','1.5','1.8','2.0','2.5']).forEach(v=>p.innerHTML+=`<option value="${v}">P${v}</option>`);
+}
+ubahPitch();
+function hitung(){
+let s=cabinet.value.split('x'); let x=Math.floor(w.value/s[0]), y=Math.floor(h.value/s[1]);
+j.innerHTML=x+' × '+y; t.innerHTML=(x*y)+' pcs';
+r.innerHTML=Math.floor(w.value/pitch.value)+' × '+Math.floor(h.value/pitch.value);
+i.innerHTML=(Math.sqrt(w.value*w.value+h.value*h.value)/25.4).toFixed(1)+' inch'; tbl.style.display='table';
+}
+</script></body></html>
